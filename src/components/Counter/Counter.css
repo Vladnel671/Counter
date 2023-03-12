@@ -1,0 +1,32 @@
+.inc {
+    width: 100px;
+    background-color: paleturquoise;
+    display: flex;
+    justify-content: center;
+}
+.reset {
+    color: whitesmoke;
+    width: 100px;
+    display: flex;
+    background-color: rebeccapurple;
+    justify-content: center;
+}
+.wrapper {
+    border-style: solid;
+    border-color: greenyellow;
+    justify-content: center;
+    height: 90px;
+    width: 200px;
+    align-items: center;
+    flex-direction: column;
+    display: flex;
+    background-color: orange;
+
+}
+.App {
+    background-color: indigo;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
