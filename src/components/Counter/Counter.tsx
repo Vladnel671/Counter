@@ -1,26 +1,21 @@
-import React, { useState } from 'react';
+import React, {FC, useState} from 'react';
 import './Counter.css';
-import Wrapper, {CounterPropsType} from "./Wrapper";
+import {Button} from "../Button"
+import Number from "./Number";
 
-const Counter = () => {
 
-    const [count, setCount] = useState<number>(0);
+type AppPropsType = {
+    ResetCallback: () => void
+    IncCountCallback: () => void
+    count: number
+}
 
-    const incFunction = () => {
-        setCount(count + 1);
-    }
-    const resetFunc = () => {
-        setCount(0)
-    }
-
-    const changeRed = {
-        color: count < 5 ? "black" : "red"
-    }
-
+const Counter: FC<AppPropsType> = ({ResetCallback, IncCountCallback,count}) => {
 
     return (
         <div>
-            <Wrapper count={count} resetFunc={resetFunc} incFunction={incFunction} changeRed={changeRed}/>
+            <Number count={count}/>
+            <Button IncCountCallback={IncCountCallback} ResetCallback={ResetCallback}></Button>
         </div>
     );
 };

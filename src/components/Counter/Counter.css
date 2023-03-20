@@ -3,24 +3,36 @@
     background-color: paleturquoise;
     display: flex;
     justify-content: center;
+    margin-right: 45px;
+    border-radius: 3px;
 }
 .reset {
+    border-radius: 3px;
     color: whitesmoke;
     width: 100px;
     display: flex;
     background-color: rebeccapurple;
     justify-content: center;
 }
+.mainCountWrap {
+    background-color: orange;
+    border-radius: 9px;
+    border-style: solid;
+    border-color: greenyellow;
+    padding: 30px;
+}
 .wrapper {
     border-style: solid;
     border-color: greenyellow;
     justify-content: center;
     height: 90px;
-    width: 200px;
+    width: 350px;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
     display: flex;
     background-color: orange;
+    border-radius: 9px;
+
 
 }
 .App {
@@ -29,4 +41,16 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+}
+.countWrap {
+    background-color: orange;
+    border-radius: 9px;
+    border-style: solid;
+    border-color: greenyellow;
+    margin-bottom: 20px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 45px;
 }

@@ -1,26 +1,45 @@
-import React from 'react';
+import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Counter from "./components/Counter/Counter";
+import Settings from "./components/Settings/Settings";
+
 
 function App() {
+
+    const [count, setCount] = useState<number>(0);
+
+    const incFunction = () => {
+
+    }
+    const resetFunc = () => {
+
+    }
+    const changeRed = {
+
+    }
+
+
+    const IncCountCallback = () => {
+        setCount(count + 1);
+    }
+    const ResetCallback = () => {
+        setCount(0)
+    }
+    const disabledCallback = () => count > 4
+
+    const ChangeRedCallback = () => {
+        color: count < 5 ? "black" : "red"
+    }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <Settings/>
+        <Counter count={count} IncCountCallback={IncCountCallback} ResetCallback={ResetCallback} />
     </div>
   );
+
+
 }
 
 export default App;
