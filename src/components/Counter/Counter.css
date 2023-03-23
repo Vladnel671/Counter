@@ -3,9 +3,11 @@
     background-color: paleturquoise;
     display: flex;
     justify-content: center;
-    margin-right: 45px;
     border-radius: 3px;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
+
 .reset {
     border-radius: 3px;
     color: whitesmoke;
@@ -14,43 +16,46 @@
     background-color: rebeccapurple;
     justify-content: center;
 }
-.mainCountWrap {
-    background-color: orange;
-    border-radius: 9px;
-    border-style: solid;
-    border-color: greenyellow;
-    padding: 30px;
-}
-.wrapper {
-    border-style: solid;
-    border-color: greenyellow;
-    justify-content: center;
-    height: 90px;
-    width: 350px;
-    align-items: center;
-    flex-direction: row;
-    display: flex;
-    background-color: orange;
-    border-radius: 9px;
 
-
-}
 .App {
     background-color: indigo;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    flex-direction: row;
 }
-.countWrap {
+
+.CounterMain {
+    width: 250px;
     background-color: orange;
     border-radius: 9px;
     border-style: solid;
-    border-color: greenyellow;
-    margin-bottom: 20px;
-    height: 50px;
     display: flex;
-    align-items: center;
     justify-content: center;
-    font-size: 45px;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.NumWrap {
+    width: 70%;
+    border-radius: 9px;
+    border-style: solid;
+    margin-bottom: 10px;
+}
+.CounterBtnsWrap {
+    width: 70%;
+    border-radius: 9px;
+    border-style: solid;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 10px;
 }
