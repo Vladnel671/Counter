@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import './Counter.css'
 import '../Settings/Settings.css'
 
@@ -6,6 +6,24 @@ function Counter() {
     const [count, setCount] = useState(0);
     const [minValue, setMinValue] = useState(0);
     const [maxValue, setMaxValue] = useState(5);
+    const [isDisabled, setIsDisabled] = useState(true);
+
+    useEffect(() => {
+        updateButtonStatus();
+    }, [count]);
+
+    function updateButtonStatus() {
+        if (count === maxValue) {
+            setIsDisabled(true);
+        }
+    }
+
+    const disableButtonOnFocusInput = () => {
+        setIsDisabled(false)
+    }
+    const disableButtonOnBlurInput = () => {
+        setIsDisabled(true)
+    }
 
     function increment() {
         if (count < maxValue) {
@@ -18,6 +36,7 @@ function Counter() {
     }
 
     function setMinMaxValues() {
+        setIsDisabled(true)
         setCount(minValue);
     }
 
@@ -43,17 +62,17 @@ function Counter() {
                 <div className='settingsWrapper'>
                     <div className='startValue'>
                         <h3>start value:</h3><input className='startInput' type="number"
-                                                    value={minValue}
+                                                    value={minValue} onFocus={disableButtonOnFocusInput}
                                                     onChange={handleMinValueChange}/>
                     </div>
                     <div className='maxValue'>
                         <h3>max value:</h3><input className='maxInput' type="number"
-                                                  value={maxValue}
+                                                  value={maxValue} onFocus={disableButtonOnFocusInput}
                                                   onChange={handleMaxValueChange}/>
                     </div>
                 </div>
                 <div className='btnWrap'>
-                    <button onClick={setMinMaxValues} className='setButton'>Set</button>
+                    <button onClick={setMinMaxValues} disabled={isDisabled} className='setButton'>Set</button>
                 </div>
             </div>
 
