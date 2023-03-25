@@ -6,7 +6,21 @@ function Counter() {
     const [count, setCount] = useState(0);
     const [minValue, setMinValue] = useState(0);
     const [maxValue, setMaxValue] = useState(5);
-    const [isDisabled, setIsDisabled] = useState(true);
+    const [buttonStates, setButtonStates] = useState([
+        true, // первая кнопка set
+        false, // вторая кнопка inc
+        false // третья кнопка reset
+    ]);
+
+    let error = 'enter values and press "set"'
+
+    const countOrError = () => {
+        if (buttonStates[0]) {
+            return count
+        } else {
+            return error
+        }
+    }
 
     useEffect(() => {
         updateButtonStatus();
@@ -14,29 +28,34 @@ function Counter() {
 
     function updateButtonStatus() {
         if (count === maxValue) {
-            setIsDisabled(true);
+            setButtonStates([true, true, false]);
         }
     }
 
     const disableButtonOnFocusInput = () => {
-        setIsDisabled(false)
+        setButtonStates([false, true, true])
+        countOrError()
     }
+
     const disableButtonOnBlurInput = () => {
-        setIsDisabled(true)
+        setButtonStates([true, false, false])
     }
 
     function increment() {
         if (count < maxValue) {
             setCount(count + 1);
+        } else {
+            setButtonStates([true, true, false])
         }
     }
 
     function reset() {
+        setButtonStates([true, false, false])
         setCount(minValue);
     }
 
     function setMinMaxValues() {
-        setIsDisabled(true)
+        setButtonStates([true, false, false])
         setCount(minValue);
     }
 
@@ -48,13 +67,10 @@ function Counter() {
         setMaxValue(Number(event.target.value));
     }
 
-    function ChangeRed() {
+    function changeRed() {
         return {color: count < maxValue ? 'black' : 'red'}
     }
 
-    function disableButton() {
-        return count === maxValue
-    }
 
     return (
         <div className='main'>
@@ -72,17 +88,17 @@ function Counter() {
                     </div>
                 </div>
                 <div className='btnWrap'>
-                    <button onClick={setMinMaxValues} disabled={isDisabled} className='setButton'>Set</button>
+                    <button onClick={setMinMaxValues} disabled={buttonStates[0]} className='setButton'>Set</button>
                 </div>
             </div>
 
             <div className='CounterMain'>
                 <div className='NumWrap'>
-                    <h1 style={ChangeRed()}>{count}</h1>
+                    <h1 style={changeRed()}>{countOrError()}</h1>
                 </div>
                 <div className='CounterBtnsWrap'>
-                    <button onClick={increment} className='inc' disabled={disableButton()}>Increment</button>
-                    <button onClick={reset} className='reset'>Reset</button>
+                    <button onClick={increment} className='inc' disabled={buttonStates[1]}>Increment</button>
+                    <button onClick={reset} disabled={buttonStates[2]} className='reset'>Reset</button>
                 </div>
             </div>
         </div>
