@@ -1,8 +1,12 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
 import './Counter.css'
 import '../Settings/Settings.css'
+import Button from "./Button/Button";
+import CounterWrapper from "./CounterWrapper/CounterWrapper";
+import SettingsWrapper from "./SettingsWrapper/SettingsWrapper";
 
 function Counter() {
+
     const [count, setCount] = useState<number>(0);
     const [minValue, setMinValue] = useState<number>(0);
     const [maxValue, setMaxValue] = useState<number>(5);
@@ -29,6 +33,7 @@ function Counter() {
         setButtonStates([false, true, true])
         setIsVisible(true)
         set2IsVisible(false)
+        setErrorMessage('enter value and press set')
     }
     const disableButtonOnFocusInput2 = () => {
         setButtonStates([false, true, true])
@@ -43,15 +48,14 @@ function Counter() {
     function increment() {
         if (count < maxValue) {
             setCount(count + 1);
-            setErrorMessage('')
         } else {
             setButtonStates([true, true, false])
         }
     }
+
     function reset() {
         setButtonStates([true, false, false])
         setCount(minValue);
-        setErrorMessage('')
     }
 
     function setMinMaxValues() {
@@ -61,33 +65,36 @@ function Counter() {
         set2IsVisible(false)
     }
 
-    function handleMinValueChange(event: ChangeEvent<HTMLInputElement>) {
-        setMinValue(Number(event.target.value));
-        if(minValue !== maxValue && minValue < maxValue && maxValue > 1  && minValue >= 0){
+
+    function comparingInputs() {
+        setErrorMessage('')
+        if (minValue !== maxValue && minValue < maxValue && maxValue >= 1 && minValue >= 0) {
+            setErrorMessage('')
             setErrorMessage('enter value and press set')
-            setButtonStates([false,true,true])
-        }
-        else {
+            setButtonStates([false, true, true])
+        } else {
+            setErrorMessage('')
             setErrorMessage('incorrect values')
-            setButtonStates([true,true,true])
+            setButtonStates([true, true, true])
         }
+    }
+
+    function handleMinValueChange(event: ChangeEvent<HTMLInputElement>) {
+        comparingInputs()
+        setMinValue(Number(event.target.value));
     }
 
     function handleMaxValueChange(event: ChangeEvent<HTMLInputElement>) {
-        setMinValue(Number(event.target.value));
-        if(minValue !== maxValue ||  minValue < maxValue && maxValue > 1  && minValue >= 0){
-            setErrorMessage('enter value and press set')
-            setButtonStates([false,true,true])
-        }
-        else {
-            setErrorMessage('incorrect values')
-            setButtonStates([true,true,true])
-        }
-
+        comparingInputs()
+        setMaxValue(Number(event.target.value));
     }
 
     const changeRedMessage = () => {
-        return  minValue === maxValue && minValue > maxValue && maxValue < 1  && minValue <= 0 ?  {color: 'red'}: {color: 'black'}
+        if (minValue < maxValue && maxValue >= 1 && minValue >= 0) {
+            return {color: 'black'}
+        } else {
+            return {color: 'red'}
+        }
     }
 
     function changeRed() {
@@ -95,7 +102,7 @@ function Counter() {
     }
 
     function inputChangeRed() {
-        if (minValue !== maxValue && minValue < maxValue && maxValue > 1  && minValue >= 0) {
+        if (minValue !== maxValue && minValue < maxValue && maxValue >= 1 && minValue >= 0) {
             return {backgroundColor: 'rgba(255, 255, 255, 1)'}
         } else {
             return {backgroundColor: 'hsl(0, 100%, 75%)'}
@@ -104,55 +111,17 @@ function Counter() {
 
     return (
         <div className='main'>
-            <div className='settingsMain'>
-                <div className='settingsWrapper'>
-                    <div className='startValue'>
-                        <h3>start value:</h3><input className='startInput' type="number"
-                                                    value={minValue} onFocus={disableButtonOnFocusInput}
-                                                    onBlur={showOnBlur}
-                                                    onChange={handleMinValueChange}
-                                                    style={inputChangeRed()}/>
-                    </div>
-                    <div className='maxValue'>
-                        <h3>max value:</h3><input className='maxInput' type="number"
-                                                  value={maxValue} onFocus={disableButtonOnFocusInput2}
-                                                  onBlur={showOnBlur}
-                                                  onChange={handleMaxValueChange}
-                                                  style={inputChangeRed()}/>
-                    </div>
-                </div>
-                <div className='btnWrap'>
-                    <button onClick={setMinMaxValues} disabled={buttonStates[0]} className='setButton'>
-                        Set
-                    </button>
-                </div>
-            </div>
-
-
-            <div className='CounterMain'>
-                <div className='NumWrap'>
-                    <h4>
-                        <div>
-                            <div>
-                                {
-                                    isVisibleFor1Input ? (<h4 style={changeRedMessage()}>{errorMessage}</h4>) :
-                                        isVisibleFor2Input ? (<h4 style={changeRedMessage()}>{errorMessage}</h4>) :
-                                            (<h4 style={changeRed()}>{count}</h4>)
-                                }
-                            </div>
-                        </div>
-                    </h4>
-                </div>
-                <div className='CounterBtnsWrap'>
-                    <button onClick={increment} className='inc' disabled={buttonStates[1]}>
-                        Increment
-                    </button>
-                    <button onClick={reset} disabled={buttonStates[2]} className='reset'>
-                        Reset
-                    </button>
-                </div>
-            </div>
-            {/*кнопки отдельная компонента */}
+            <SettingsWrapper buttonStates={buttonStates} handleMinValueChange={handleMinValueChange}
+                             handleMaxValueChange={handleMaxValueChange}
+                             setMinMaxValues={setMinMaxValues} inputChangeRed={inputChangeRed} maxValue={maxValue}
+                             minValue={minValue}
+                             disableButtonOnFocusInput={disableButtonOnFocusInput}
+                             disableButtonOnFocusInput2={disableButtonOnFocusInput2} showOnBlur={showOnBlur}/>
+            <CounterWrapper isVisibleFor1Input={isVisibleFor1Input} isVisibleFor2Input={isVisibleFor2Input}
+                            errorMessage={errorMessage} buttonStates={buttonStates} reset={reset}
+                            count={count} changeRed={changeRed} changeRedMessage={changeRedMessage}
+                            increment={increment}
+            />
         </div>
     );
 }
