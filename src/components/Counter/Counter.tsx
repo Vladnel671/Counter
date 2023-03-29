@@ -1,7 +1,6 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
 import './Counter.css'
 import '../Settings/Settings.css'
-import Button from "./Button/Button";
 import CounterWrapper from "./CounterWrapper/CounterWrapper";
 import SettingsWrapper from "./SettingsWrapper/SettingsWrapper";
 
@@ -20,8 +19,30 @@ function Counter() {
     const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
+        const value = localStorage.getItem("count");
+        if (value !== null) {
+            setMinValue(JSON.parse(value));
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem("count", JSON.stringify(count));
+    }, [count]);
+
+
+    useEffect(() => {
         updateButtonStatus()
     }, [count]);
+
+    useEffect(() => {
+        setCount(minValue);
+        if (minValue !== maxValue && minValue < maxValue && maxValue >= 1 && minValue >= 0) {
+            setErrorMessage('enter value and press set')
+        } else {
+            setErrorMessage('incorrect values')
+            setButtonStates([true, true, true])
+        }
+    }, [minValue, maxValue])
 
     function updateButtonStatus() {
         if (count === maxValue) {
@@ -33,7 +54,6 @@ function Counter() {
         setButtonStates([false, true, true])
         setIsVisible(true)
         set2IsVisible(false)
-        setErrorMessage('enter value and press set')
     }
     const disableButtonOnFocusInput2 = () => {
         setButtonStates([false, true, true])
@@ -43,6 +63,11 @@ function Counter() {
     const showOnBlur = () => {
         setIsVisible(false)
         set2IsVisible(false)
+        if (minValue !== maxValue && minValue < maxValue && maxValue >= 1 && minValue >= 0) {
+            setButtonStates([false, true, true])
+        } else {
+            setButtonStates([true, true, true])
+        }
     }
 
     function increment() {
@@ -65,27 +90,13 @@ function Counter() {
         set2IsVisible(false)
     }
 
-
-    function comparingInputs() {
-        setErrorMessage('')
-        if (minValue !== maxValue && minValue < maxValue && maxValue >= 1 && minValue >= 0) {
-            setErrorMessage('')
-            setErrorMessage('enter value and press set')
-            setButtonStates([false, true, true])
-        } else {
-            setErrorMessage('')
-            setErrorMessage('incorrect values')
-            setButtonStates([true, true, true])
-        }
-    }
-
     function handleMinValueChange(event: ChangeEvent<HTMLInputElement>) {
-        comparingInputs()
+        setButtonStates([false, true, true])
         setMinValue(Number(event.target.value));
     }
 
     function handleMaxValueChange(event: ChangeEvent<HTMLInputElement>) {
-        comparingInputs()
+        setButtonStates([false, true, true])
         setMaxValue(Number(event.target.value));
     }
 
