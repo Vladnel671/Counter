@@ -19,23 +19,24 @@ function Counter() {
     const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
-        const value = localStorage.getItem("count");
-        if (value !== null) {
-            setMinValue(JSON.parse(value));
+        let newCount = localStorage.getItem('count')
+        let newMin = localStorage.getItem('min')
+        let newMax = localStorage.getItem('max')
+        if (newCount && newMin && newMax) {
+            let newCountParsed = JSON.parse(newCount) ?? count;
+            let newMinParsed = JSON.parse(newMin) ?? minValue;
+            let newMaxParsed = JSON.parse(newMax) ?? maxValue;
+            setCount(newCountParsed)
+            setMinValue(newMinParsed)
+            setMaxValue(newMaxParsed)
         }
-    }, []);
-
-    useEffect(() => {
-        localStorage.setItem("count", JSON.stringify(count));
-    }, [count]);
-
+    }, [])
 
     useEffect(() => {
         updateButtonStatus()
     }, [count]);
 
     useEffect(() => {
-        setCount(minValue);
         if (minValue !== maxValue && minValue < maxValue && maxValue >= 1 && minValue >= 0) {
             setErrorMessage('enter value and press set')
         } else {
@@ -50,24 +51,28 @@ function Counter() {
         }
     }
 
+    function comparing() {
+        if (minValue !== maxValue && minValue < maxValue && maxValue >= 1 && minValue >= 0) {
+            setButtonStates([false, true, true])
+        } else {
+            setButtonStates([true, true, true])
+        }
+    }
+
     const disableButtonOnFocusInput = () => {
-        setButtonStates([false, true, true])
+        comparing()
         setIsVisible(true)
         set2IsVisible(false)
     }
     const disableButtonOnFocusInput2 = () => {
-        setButtonStates([false, true, true])
+        comparing()
         setIsVisible(false)
         set2IsVisible(true)
     }
     const showOnBlur = () => {
         setIsVisible(false)
         set2IsVisible(false)
-        if (minValue !== maxValue && minValue < maxValue && maxValue >= 1 && minValue >= 0) {
-            setButtonStates([false, true, true])
-        } else {
-            setButtonStates([true, true, true])
-        }
+        comparing()
     }
 
     function increment() {
@@ -81,6 +86,7 @@ function Counter() {
     function reset() {
         setButtonStates([true, false, false])
         setCount(minValue);
+
     }
 
     function setMinMaxValues() {
@@ -93,11 +99,12 @@ function Counter() {
     function handleMinValueChange(event: ChangeEvent<HTMLInputElement>) {
         setButtonStates([false, true, true])
         setMinValue(Number(event.target.value));
+        localStorage.setItem('min', JSON.stringify(Number(event.target.value)));
     }
-
     function handleMaxValueChange(event: ChangeEvent<HTMLInputElement>) {
         setButtonStates([false, true, true])
         setMaxValue(Number(event.target.value));
+        localStorage.setItem('max', JSON.stringify(Number(event.target.value)));
     }
 
     const changeRedMessage = () => {
@@ -111,6 +118,7 @@ function Counter() {
     function changeRed() {
         return {color: count < maxValue ? 'black' : 'red'}
     }
+
 
     function inputChangeRed() {
         if (minValue !== maxValue && minValue < maxValue && maxValue >= 1 && minValue >= 0) {
