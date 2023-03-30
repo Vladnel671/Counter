@@ -13,9 +13,10 @@ type SettingsWrapperTypeProps = {
     handleMinValueChange: (event: ChangeEvent<HTMLInputElement>) => void
     handleMaxValueChange: (event: ChangeEvent<HTMLInputElement>) => void
 
-    inputChangeRed: () => object
     setMinMaxValues: () => void
 
+    isValidFirstInput: boolean
+    isValidSecondInput: boolean
     buttonStates: Array<boolean>
 
 }
@@ -24,13 +25,12 @@ const SettingsWrapper: FC<SettingsWrapperTypeProps> = ({
                                                            buttonStates,
                                                            disableButtonOnFocusInput2,
                                                            disableButtonOnFocusInput,
-                                                           inputChangeRed,
                                                            handleMaxValueChange,
                                                            maxValue,
                                                            setMinMaxValues,
                                                            minValue,
                                                            handleMinValueChange,
-                                                           showOnBlur
+                                                           showOnBlur,isValidSecondInput, isValidFirstInput
                                                        }) => {
     return (
         <div className='settingsMain'>
@@ -40,14 +40,14 @@ const SettingsWrapper: FC<SettingsWrapperTypeProps> = ({
                                                 value={minValue} onFocus={disableButtonOnFocusInput}
                                                 onBlur={showOnBlur}
                                                 onChange={handleMinValueChange}
-                                                style={inputChangeRed()}/>
+                                                style={isValidFirstInput ? { backgroundColor: 'rgba(255, 255, 255, 1)'} :  {backgroundColor: 'hsl(0, 100%, 75%)'}}/>
                 </div>
                 <div className='maxValue'>
                     <h3>max value:</h3><input className='maxInput' type="number"
                                               value={maxValue} onFocus={disableButtonOnFocusInput2}
                                               onBlur={showOnBlur}
                                               onChange={handleMaxValueChange}
-                                              style={inputChangeRed()}/>
+                                              style={isValidSecondInput ? { backgroundColor: 'rgba(255, 255, 255, 1)'} :  {backgroundColor: 'hsl(0, 100%, 75%)'}}/>
                 </div>
             </div>
             <div className='btnWrap'>

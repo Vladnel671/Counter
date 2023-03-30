@@ -17,6 +17,8 @@ function Counter() {
     const [isVisibleFor1Input, setIsVisible] = useState<boolean>(false);
     const [isVisibleFor2Input, set2IsVisible] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const [isValidFirstInput, setIsValidFirstInput] = useState(true);
+    const [isValidSecondInput, setIsValidSecondInput] = useState(true);
 
     useEffect(() => {
         let newMin = localStorage.getItem('min')
@@ -30,9 +32,9 @@ function Counter() {
         }
     }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
         let newMin = localStorage.getItem('min')
-        if(newMin){
+        if (newMin) {
             let newMinParsed = JSON.parse(newMin) ?? minValue;
             setCount(newMinParsed)
         }
@@ -43,12 +45,17 @@ function Counter() {
     }, [count]);
 
     useEffect(() => {
-        if (minValue !== maxValue && minValue < maxValue && maxValue >= 1 && minValue >= 0) {
+        if ((minValue !== maxValue) && (maxValue >= 1) && (minValue >= 0)) {
             setErrorMessage('enter value and press set')
+            setIsValidFirstInput(true)
+            setIsValidSecondInput(true)
         } else {
+            setIsValidFirstInput(false)
+            setIsValidSecondInput(false)
             setErrorMessage('incorrect values')
             setButtonStates([true, true, true])
         }
+
     }, [minValue, maxValue])
 
     function updateButtonStatus() {
@@ -108,6 +115,7 @@ function Counter() {
         setButtonStates([false, true, true])
         setMinValue(Number(event.target.value));
     }
+
     function handleMaxValueChange(event: ChangeEvent<HTMLInputElement>) {
         setButtonStates([false, true, true])
         setMaxValue(Number(event.target.value));
@@ -125,23 +133,11 @@ function Counter() {
         return {color: count < maxValue ? 'black' : 'red'}
     }
 
-    useEffect( ()=> {
-        inputChangeRed()
-    }, [minValue, maxValue] )
-
-    function inputChangeRed() {
-        if (minValue !== maxValue && minValue < maxValue && maxValue >= 1 && minValue >= 0) {
-            return {backgroundColor: 'rgba(255, 255, 255, 1)'}
-        } else {
-            return {backgroundColor: 'hsl(0, 100%, 75%)'}
-        }
-    }
-
     return (
         <div className='main'>
-            <SettingsWrapper buttonStates={buttonStates} handleMinValueChange={handleMinValueChange}
-                             handleMaxValueChange={handleMaxValueChange}
-                             setMinMaxValues={setMinMaxValues} inputChangeRed={inputChangeRed} maxValue={maxValue}
+            <SettingsWrapper buttonStates={buttonStates} handleMinValueChange={handleMinValueChange} isValidFirstInput={isValidFirstInput}
+                             handleMaxValueChange={handleMaxValueChange} isValidSecondInput={isValidSecondInput}
+                             setMinMaxValues={setMinMaxValues} maxValue={maxValue}
                              minValue={minValue}
                              disableButtonOnFocusInput={disableButtonOnFocusInput}
                              disableButtonOnFocusInput2={disableButtonOnFocusInput2} showOnBlur={showOnBlur}/>
