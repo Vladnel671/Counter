@@ -19,16 +19,22 @@ function Counter() {
     const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
-        let newCount = localStorage.getItem('count')
         let newMin = localStorage.getItem('min')
         let newMax = localStorage.getItem('max')
-        if (newCount && newMin && newMax) {
-            let newCountParsed = JSON.parse(newCount) ?? count;
+        if (newMin && newMax) {
             let newMinParsed = JSON.parse(newMin) ?? minValue;
             let newMaxParsed = JSON.parse(newMax) ?? maxValue;
-            setCount(newCountParsed)
             setMinValue(newMinParsed)
             setMaxValue(newMaxParsed)
+
+        }
+    }, [])
+
+    useEffect(()=>{
+        let newMin = localStorage.getItem('min')
+        if(newMin){
+            let newMinParsed = JSON.parse(newMin) ?? minValue;
+            setCount(newMinParsed)
         }
     }, [])
 
@@ -91,20 +97,20 @@ function Counter() {
 
     function setMinMaxValues() {
         setButtonStates([true, false, false])
-        setCount(minValue);
         setIsVisible(false)
         set2IsVisible(false)
+        localStorage.setItem('min', JSON.stringify(minValue));
+        localStorage.setItem('max', JSON.stringify(maxValue));
+        setCount(minValue);
     }
 
     function handleMinValueChange(event: ChangeEvent<HTMLInputElement>) {
         setButtonStates([false, true, true])
         setMinValue(Number(event.target.value));
-        localStorage.setItem('min', JSON.stringify(Number(event.target.value)));
     }
     function handleMaxValueChange(event: ChangeEvent<HTMLInputElement>) {
         setButtonStates([false, true, true])
         setMaxValue(Number(event.target.value));
-        localStorage.setItem('max', JSON.stringify(Number(event.target.value)));
     }
 
     const changeRedMessage = () => {
@@ -119,6 +125,9 @@ function Counter() {
         return {color: count < maxValue ? 'black' : 'red'}
     }
 
+    useEffect( ()=> {
+        inputChangeRed()
+    }, [minValue, maxValue] )
 
     function inputChangeRed() {
         if (minValue !== maxValue && minValue < maxValue && maxValue >= 1 && minValue >= 0) {
