@@ -1,10 +1,10 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
-import './Counter.css'
-import './Settings/SettingsWrapper/Settings.css'
-import CounterWrapper from "./CounterWrapper/CounterWrapper";
-import SettingsWrapper from "./Settings/SettingsWrapper/SettingsWrapper";
+import './Counter2.css'
+import './Settings/SettingsWrapper/Settings2.css'
+import CounterWrapper2 from "./CounterWrapper/CounterWrapper2";
+import SettingsWrapper2 from "./Settings/SettingsWrapper/SettingsWrapper2";
 
-function Counter() {
+function Counter2() {
 
     const [count, setCount] = useState<number>(0);
     const [minValue, setMinValue] = useState<number>(0);
@@ -12,13 +12,15 @@ function Counter() {
     const [buttonStates, setButtonStates] = useState<Array<boolean>>([
         true, // первая кнопка set
         false, // вторая кнопка inc
-        false // третья кнопка reset
+        false, // третья кнопка reset
+        false
     ]);
     const [isVisibleFor1Input, setIsVisible] = useState<boolean>(false);
     const [isVisibleFor2Input, set2IsVisible] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [isValidFirstInput, setIsValidFirstInput] = useState(true);
     const [isValidSecondInput, setIsValidSecondInput] = useState(true);
+    const [isHidden, setIsHidden] = useState(false)
 
     useEffect(() => {
         let newMin = localStorage.getItem('min')
@@ -54,10 +56,10 @@ function Counter() {
                 setIsValidSecondInput(false)
                 setErrorMessage('incorrect values')
                 setButtonStates([true, true, true])
-            }else {
+            } else {
                 setIsValidFirstInput(true)
                 setIsValidSecondInput(true)
-                if(minValue > maxValue) {
+                if (minValue > maxValue) {
                     setIsValidFirstInput(false)
                     setIsValidSecondInput(false)
                     setErrorMessage('incorrect values')
@@ -73,14 +75,14 @@ function Counter() {
                 setIsValidSecondInput(false)
                 setErrorMessage('incorrect value')
                 setButtonStates([true, true, true])
-            }else {
+            } else {
                 setIsValidSecondInput(true)
             }
-            if (minValue < 0){
+            if (minValue < 0) {
                 setIsValidFirstInput(false)
                 setErrorMessage('incorrect value')
                 setButtonStates([true, true, true])
-            }else {
+            } else {
                 setIsValidFirstInput(true)
             }
         }
@@ -130,6 +132,10 @@ function Counter() {
         setCount(minValue);
     }
 
+    function set() {
+        setIsHidden(!isHidden)
+    }
+
     function setMinMaxValues() {
         setButtonStates([true, false, false])
         setIsVisible(false)
@@ -137,6 +143,7 @@ function Counter() {
         localStorage.setItem('min', JSON.stringify(minValue));
         localStorage.setItem('max', JSON.stringify(maxValue));
         setCount(minValue);
+        setIsHidden(!isHidden)
     }
 
     function handleMinValueChange(event: ChangeEvent<HTMLInputElement>) {
@@ -163,20 +170,26 @@ function Counter() {
 
     return (
         <div className='main'>
-            <SettingsWrapper buttonStates={buttonStates} handleMinValueChange={handleMinValueChange}
-                             isValidFirstInput={isValidFirstInput}
-                             handleMaxValueChange={handleMaxValueChange} isValidSecondInput={isValidSecondInput}
-                             setMinMaxValues={setMinMaxValues} maxValue={maxValue}
-                             minValue={minValue}
-                             disableButtonOnFocusInput={disableButtonOnFocusInput}
-                             disableButtonOnFocusInput2={disableButtonOnFocusInput2} showOnBlur={showOnBlur}/>
-            <CounterWrapper isVisibleFor1Input={isVisibleFor1Input} isVisibleFor2Input={isVisibleFor2Input}
-                            errorMessage={errorMessage} buttonStates={buttonStates} reset={reset}
-                            count={count} changeRed={changeRed} changeRedMessage={changeRedMessage}
-                            increment={increment}
-            />
+            {
+                isHidden ? (<SettingsWrapper2 buttonStates={buttonStates} handleMinValueChange={handleMinValueChange}
+                                              isValidFirstInput={isValidFirstInput}
+                                              handleMaxValueChange={handleMaxValueChange}
+                                              isValidSecondInput={isValidSecondInput}
+                                              setMinMaxValues={setMinMaxValues} maxValue={maxValue}
+                                              minValue={minValue}
+                                              disableButtonOnFocusInput={disableButtonOnFocusInput}
+                                              disableButtonOnFocusInput2={disableButtonOnFocusInput2}
+                                              showOnBlur={showOnBlur}/>) :
+
+                    (<CounterWrapper2 isVisibleFor1Input={isVisibleFor1Input} isVisibleFor2Input={isVisibleFor2Input}
+                                      errorMessage={errorMessage} buttonStates={buttonStates} reset={reset}
+                                      count={count} changeRed={changeRed} changeRedMessage={changeRedMessage}
+                                      increment={increment} set={set}/>)
+            }
+
+
         </div>
     );
 }
 
-export default Counter;
+export default Counter2;
