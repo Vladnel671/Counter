@@ -45,15 +45,44 @@ function Counter() {
     }, [count]);
 
     useEffect(() => {
-        if ((minValue !== maxValue) && (maxValue >= 1) && (minValue >= 0)) {
-            setErrorMessage('enter value and press set')
+        if (maxValue >= 1 && minValue >= 0) {
+            setErrorMessage('enter values and press set')
             setIsValidFirstInput(true)
             setIsValidSecondInput(true)
+            if (maxValue === minValue) {
+                setIsValidFirstInput(false)
+                setIsValidSecondInput(false)
+                setErrorMessage('incorrect values')
+                setButtonStates([true, true, true])
+            }else {
+                setIsValidFirstInput(true)
+                setIsValidSecondInput(true)
+                if(minValue > maxValue) {
+                    setIsValidFirstInput(false)
+                    setIsValidSecondInput(false)
+                    setErrorMessage('incorrect values')
+                    setButtonStates([true, true, true])
+                }
+                if (minValue < maxValue) {
+                    setIsValidFirstInput(true)
+                    setIsValidSecondInput(true)
+                }
+            }
         } else {
-            setIsValidFirstInput(false)
-            setIsValidSecondInput(false)
-            setErrorMessage('incorrect values')
-            setButtonStates([true, true, true])
+            if (maxValue < 1) {
+                setIsValidSecondInput(false)
+                setErrorMessage('incorrect value')
+                setButtonStates([true, true, true])
+            }else {
+                setIsValidSecondInput(true)
+            }
+            if (minValue < 0){
+                setIsValidFirstInput(false)
+                setErrorMessage('incorrect value')
+                setButtonStates([true, true, true])
+            }else {
+                setIsValidFirstInput(true)
+            }
         }
 
     }, [minValue, maxValue])
@@ -99,7 +128,6 @@ function Counter() {
     function reset() {
         setButtonStates([true, false, false])
         setCount(minValue);
-
     }
 
     function setMinMaxValues() {
@@ -135,7 +163,8 @@ function Counter() {
 
     return (
         <div className='main'>
-            <SettingsWrapper buttonStates={buttonStates} handleMinValueChange={handleMinValueChange} isValidFirstInput={isValidFirstInput}
+            <SettingsWrapper buttonStates={buttonStates} handleMinValueChange={handleMinValueChange}
+                             isValidFirstInput={isValidFirstInput}
                              handleMaxValueChange={handleMaxValueChange} isValidSecondInput={isValidSecondInput}
                              setMinMaxValues={setMinMaxValues} maxValue={maxValue}
                              minValue={minValue}
