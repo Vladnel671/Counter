@@ -1,8 +1,8 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
 import './Counter2.css'
-import './Settings/SettingsWrapper/Settings2.css'
+import './../Counter/Settings/SettingsWrapper/Settings.css'
 import CounterWrapper2 from "./CounterWrapper/CounterWrapper2";
-import SettingsWrapper2 from "./Settings/SettingsWrapper/SettingsWrapper2";
+import SettingsWrapper from "../Counter/Settings/SettingsWrapper/SettingsWrapper";
 
 function Counter2() {
 
@@ -171,7 +171,7 @@ function Counter2() {
     return (
         <div className='main'>
             {
-                isHidden ? (<SettingsWrapper2 buttonStates={buttonStates} handleMinValueChange={handleMinValueChange}
+                isHidden ? (<SettingsWrapper buttonStates={buttonStates} handleMinValueChange={handleMinValueChange}
                                               isValidFirstInput={isValidFirstInput}
                                               handleMaxValueChange={handleMaxValueChange}
                                               isValidSecondInput={isValidSecondInput}

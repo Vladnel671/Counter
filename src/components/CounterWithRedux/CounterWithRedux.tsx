@@ -1,8 +1,8 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
 import './CounterWithRedux.css'
-import './Settings/SettingsWrapper/Settings.css'
+import './../Counter/Settings/SettingsWrapper/Settings.css'
 import CounterWrapper from "./CounterWrapper/CounterWrapper";
-import SettingsWrapper from "./Settings/SettingsWrapper/SettingsWrapper";
+import SettingsWrapper from "../Counter/Settings/SettingsWrapper/SettingsWrapper";
 
 function CounterWithRedux() {
 
