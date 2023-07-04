@@ -59,3 +59,8 @@
     align-items: center;
     padding-bottom: 10px;
 }
+.counterWithRedux {
+    box-sizing: border-box;
+    color: #2582a1;
+    padding-left: 10px;
+}
