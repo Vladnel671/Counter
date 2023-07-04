@@ -17,14 +17,6 @@
     justify-content: center;
 }
 
-.App {
-    background-color: indigo;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    flex-direction: row;
-}
 
 .CounterMain {
     width: 250px;
@@ -35,20 +27,15 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-
 }
 
-.main {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
 .NumWrap {
     width: 70%;
     border-radius: 9px;
     border-style: solid;
     margin-bottom: 10px;
 }
+
 .CounterBtnsWrap {
     width: 70%;
     border-radius: 9px;
@@ -58,4 +45,11 @@
     flex-direction: column;
     align-items: center;
     padding-bottom: 10px;
+}
+
+.counter {
+    color: rebeccapurple;
+    text-decoration: none;
+    padding-left: 20px;
+    padding-right: 10px;
 }

@@ -1,5 +1,15 @@
 .App {
-  text-align: center;
-  display: flex;
-  justify-content: space-between;
+    text-align: center;
+    background-color: indigo;
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 200px;
 }

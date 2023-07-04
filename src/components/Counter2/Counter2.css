@@ -19,25 +19,10 @@
     margin-right: 6px;
 }
 
-.header {
-    align-items: center;
-    justify-content: flex-start;
-    margin-bottom: 200px;
-    color: #282c34;
-    display: flex;
-    background-color: whitesmoke;
-    width: 100%;
-}
-
-.counter {
-    margin-left: 10px;
-    color: rebeccapurple;
-    text-decoration: none;
-    margin-right: 10px;
-}
-
 .counterV2 {
     color: rebeccapurple;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .set {
@@ -47,15 +32,6 @@
     display: flex;
     background-color: hotpink;
     justify-content: center;
-}
-
-.App {
-    background-color: indigo;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    min-height: 100vh;
-    flex-direction: column;
 }
 
 .CounterMain {
@@ -69,10 +45,6 @@
     flex-direction: column;
     align-items: center;
 
-}
-
-.main {
-    display: flex;
 }
 
 .NumWrap {
