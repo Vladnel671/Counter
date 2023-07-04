@@ -1,5 +1,5 @@
 import React, {ChangeEvent, FC} from 'react';
-import Button2 from "../../Button/Button2";
+import Button2 from "../../../common/Button/Button";
 
 type SettingsWrapperTypeProps = {
     minValue: number

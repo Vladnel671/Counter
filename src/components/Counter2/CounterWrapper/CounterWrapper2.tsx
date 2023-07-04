@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import Button2 from "../Button/Button2";
+import Button2 from "../../common/Button/Button";
 
 type CounterWrapperTypeProps = {
     isVisibleFor1Input: boolean

@@ -1,0 +1,81 @@
+.settingsWrapper {
+    background-color: dodgerblue;
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 9px;
+    border-style: solid;
+    border-width: 2px;
+    width: 400px;
+    align-items: center;
+}
+
+.settingsMain {
+    border-radius: 9px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    background-color: dodgerblue;
+    border-style: solid;
+    border-width: 2px;
+    margin-right: 160px;
+}
+
+.maxValue {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    height: 20px;
+    justify-content: space-between;
+}
+
+.startValue {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    height: 40px;
+    margin-bottom: 10px;
+}
+
+.maxInput {
+    height: 20px;
+    width: 100px;
+    outline: 0;
+    outline-offset: 0;
+    text-align: center;
+    margin-left: 50px;
+    border-radius: 9px;
+    border-style: none;
+}
+
+.startInput {
+    height: 20px;
+    width: 100px;
+    outline: 0;
+    outline-offset: 0;
+    text-align: center;
+    margin-left: 50px;
+    border-radius: 9px;
+    border-style: none;
+}
+
+.btnWrap {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    height: 50px;
+    border-radius: 9px;
+    border-style: solid;
+    border-width: 2px;
+    width: 450px;
+}
+
+.setButton {
+    background-color: #282c34;
+    color: whitesmoke;
+    width: 100px;
+    height: 30px;
+    border-radius: 9px;
+}
