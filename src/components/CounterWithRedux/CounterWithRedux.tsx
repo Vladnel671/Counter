@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
-import './CounterWithRedux.css'
+import './../Counter/Counter.css'
 import './../Counter/Settings/SettingsWrapper/Settings.css'
 import CounterWrapper from "./CounterWrapper/CounterWrapper";
 import SettingsWrapper from "../Counter/Settings/SettingsWrapper/SettingsWrapper";
@@ -163,18 +163,18 @@ function CounterWithRedux() {
 
     return (
         <div className='main'>
-            {/*<SettingsWrapper buttonStates={buttonStates} handleMinValueChange={handleMinValueChange}*/}
-            {/*                 isValidFirstInput={isValidFirstInput}*/}
-            {/*                 handleMaxValueChange={handleMaxValueChange} isValidSecondInput={isValidSecondInput}*/}
-            {/*                 setMinMaxValues={setMinMaxValues} maxValue={maxValue}*/}
-            {/*                 minValue={minValue}*/}
-            {/*                 disableButtonOnFocusInput={disableButtonOnFocusInput}*/}
-            {/*                 disableButtonOnFocusInput2={disableButtonOnFocusInput2} showOnBlur={showOnBlur}/>*/}
-            {/*<CounterWrapper isVisibleFor1Input={isVisibleFor1Input} isVisibleFor2Input={isVisibleFor2Input}*/}
-            {/*                errorMessage={errorMessage} buttonStates={buttonStates} reset={reset}*/}
-            {/*                count={count} changeRed={changeRed} changeRedMessage={changeRedMessage}*/}
-            {/*                increment={increment}*/}
-            {/*/>*/}
+            <SettingsWrapper buttonStates={buttonStates} handleMinValueChange={handleMinValueChange}
+                             isValidFirstInput={isValidFirstInput}
+                             handleMaxValueChange={handleMaxValueChange} isValidSecondInput={isValidSecondInput}
+                             setMinMaxValues={setMinMaxValues} maxValue={maxValue}
+                             minValue={minValue}
+                             disableButtonOnFocusInput={disableButtonOnFocusInput}
+                             disableButtonOnFocusInput2={disableButtonOnFocusInput2} showOnBlur={showOnBlur}/>
+            <CounterWrapper isVisibleFor1Input={isVisibleFor1Input} isVisibleFor2Input={isVisibleFor2Input}
+                            errorMessage={errorMessage} buttonStates={buttonStates} reset={reset}
+                            count={count} changeRed={changeRed} changeRedMessage={changeRedMessage}
+                            increment={increment}
+            />
         </div>
     );
 }

@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
-import './Counter2.css'
+import './../Counter/Counter.css'
 import './../Counter/Settings/SettingsWrapper/Settings.css'
 import CounterWrapper2 from "./CounterWrapper/CounterWrapper2";
 import SettingsWrapper from "../Counter/Settings/SettingsWrapper/SettingsWrapper";
