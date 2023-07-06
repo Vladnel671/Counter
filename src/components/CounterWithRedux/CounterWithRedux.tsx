@@ -54,10 +54,10 @@ function CounterWithRedux() {
                 setIsValidSecondInput(false)
                 setErrorMessage('incorrect values')
                 setButtonStates([true, true, true])
-            }else {
+            } else {
                 setIsValidFirstInput(true)
                 setIsValidSecondInput(true)
-                if(minValue > maxValue) {
+                if (minValue > maxValue) {
                     setIsValidFirstInput(false)
                     setIsValidSecondInput(false)
                     setErrorMessage('incorrect values')
@@ -73,14 +73,14 @@ function CounterWithRedux() {
                 setIsValidSecondInput(false)
                 setErrorMessage('incorrect value')
                 setButtonStates([true, true, true])
-            }else {
+            } else {
                 setIsValidSecondInput(true)
             }
-            if (minValue < 0){
+            if (minValue < 0) {
                 setIsValidFirstInput(false)
                 setErrorMessage('incorrect value')
                 setButtonStates([true, true, true])
-            }else {
+            } else {
                 setIsValidFirstInput(true)
             }
         }

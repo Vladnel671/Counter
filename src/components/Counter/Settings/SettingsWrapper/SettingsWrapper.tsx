@@ -30,7 +30,7 @@ const SettingsWrapper: FC<SettingsWrapperTypeProps> = ({
                                                            setMinMaxValues,
                                                            minValue,
                                                            handleMinValueChange,
-                                                           showOnBlur,isValidSecondInput, isValidFirstInput
+                                                           showOnBlur, isValidSecondInput, isValidFirstInput
                                                        }) => {
     return (
         <div className='settingsMain'>
@@ -40,18 +40,18 @@ const SettingsWrapper: FC<SettingsWrapperTypeProps> = ({
                                                 value={minValue} onFocus={disableButtonOnFocusInput}
                                                 onBlur={showOnBlur}
                                                 onChange={handleMinValueChange}
-                                                style={isValidFirstInput ? { backgroundColor: 'rgba(255, 255, 255, 1)'} :  {backgroundColor: 'hsl(0, 100%, 75%)'}}/>
+                                                style={isValidFirstInput ? {backgroundColor: 'rgba(255, 255, 255, 1)'} : {backgroundColor: 'hsl(0, 100%, 75%)'}}/>
                 </div>
                 <div className='maxValue'>
                     <h3>max value:</h3><input className='maxInput' type="number"
                                               value={maxValue} onFocus={disableButtonOnFocusInput2}
                                               onBlur={showOnBlur}
                                               onChange={handleMaxValueChange}
-                                              style={isValidSecondInput ? { backgroundColor: 'rgba(255, 255, 255, 1)'} :  {backgroundColor: 'hsl(0, 100%, 75%)'}}/>
+                                              style={isValidSecondInput ? {backgroundColor: 'rgba(255, 255, 255, 1)'} : {backgroundColor: 'hsl(0, 100%, 75%)'}}/>
                 </div>
             </div>
             <div className='btnWrap'>
-                <Button onClickHandler={setMinMaxValues} buttonStateDisable={buttonStates[0]} className='setButton'
+                <Button onClickHandler={setMinMaxValues} buttonStateDisable={buttonStates[0]} className='set'
                         nameButton='Set'/>
             </div>
         </div>

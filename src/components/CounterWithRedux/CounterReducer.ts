@@ -1,51 +1,36 @@
-import { Reducer } from 'redux';
+import {Reducer} from "redux";
+import {CounterStateType, CounterAction, initialState} from "./store";
 
-const INCREMENT_COUNT = "INCREMENT_COUNT"
-const DECREMENT_COUNT = "DECREMENT_COUNT"
-const RESET_COUNT = "RESET_COUNT"
-const SET_COUNT = "SET_COUNT"
-
-export const initialState: InitialStateType = {count: 0};
-
-export type InitialStateType = {
-    count: number
-}
-
-export type ActionType =
-    | { type: typeof INCREMENT_COUNT }
-    | { type: typeof DECREMENT_COUNT }
-    | { type: typeof RESET_COUNT }
-    | { type: typeof  SET_COUNT, payload: number }
-
-// Action creators
-export const incrementCountAC = (): ActionType => ({type: INCREMENT_COUNT});
-export const decrementCountAC = (): ActionType => ({type: DECREMENT_COUNT});
-export const resetCountAC = (): ActionType => ({type: RESET_COUNT});
-export const setCountAC = (newCount: number): ActionType => ({type: SET_COUNT, payload: newCount});
-
-export const CounterReducer: Reducer<InitialStateType, ActionType> = (state = initialState, action: ActionType): InitialStateType => {
+export const CounterReducer: Reducer<CounterStateType, CounterAction> = (
+    state = initialState,
+    action
+) => {
     switch (action.type) {
-        case INCREMENT_COUNT:
-            return {
-                ...state,
-                count: state.count + 1
-            }
-        case DECREMENT_COUNT:
-            return {
-                ...state,
-                count: state.count - 1
-            }
-        case RESET_COUNT:
-            return {
-                ...state,
-                count: 0
-            }
-        case SET_COUNT:
-            return {
-                ...state,
-                count: action.payload
-            }
+        case "INCREMENT_COUNT":
+            return {...state, count: state.count + 1};
+        case "DECREMENT_COUNT":
+            return {...state, count: state.count - 1};
+        case "RESET_COUNT":
+            return {...state, count: 0};
+        case "SET_COUNT":
+            return {...state, count: action.payload};
+        case "SET_MIN_VALUE":
+            return {...state, minValue: action.payload};
+        case "SET_MAX_VALUE":
+            return {...state, maxValue: action.payload};
+        case "SET_BUTTON_STATES":
+            return {...state, buttonStates: action.payload};
+        case "SET_IS_VISIBLE_FOR_1_INPUT":
+            return {...state, isVisibleFor1Input: action.payload};
+        case "SET_IS_VISIBLE_FOR_2_INPUT":
+            return {...state, isVisibleFor2Input: action.payload};
+        case "SET_ERROR_MESSAGE":
+            return {...state, errorMessage: action.payload};
+        case "SET_IS_VALID_FIRST_INPUT":
+            return {...state, isValidFirstInput: action.payload};
+        case "SET_IS_VALID_SECOND_INPUT":
+            return {...state, isValidSecondInput: action.payload};
         default:
-            return state
+            return state;
     }
-}
+};
