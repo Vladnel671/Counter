@@ -4,7 +4,7 @@ import './../Counter/Settings/SettingsWrapper/Settings.css'
 import CounterWrapper from "./CounterWrapper/CounterWrapper";
 import SettingsWrapper from "../Counter/Settings/SettingsWrapper/SettingsWrapper";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "./store";
+
 import {
     incrementCount,
     setButtonStates, setCount,
@@ -13,23 +13,24 @@ import {
     setIsValidSecondInput,
     setIsVisibleFor1Input, setIsVisibleFor2Input, setMaxValue, setMinValue
 } from "./actions";
+import {RootState} from "./store";
 
 function CounterWithRedux() {
     const dispatch = useDispatch();
-    const count = useSelector((state: RootState) => state.counter.count);
+    const count = useSelector((state: RootState) => state.count);
 
-    const minValue = useSelector((state: RootState) => state.counter.minValue);
-    const maxValue = useSelector((state: RootState) => state.counter.maxValue);
+    const minValue = useSelector((state: RootState) => state.minValue);
+    const maxValue = useSelector((state: RootState) => state.maxValue);
 
-    const buttonStates = useSelector((state: RootState) => state.counter.buttonStates)
+    const buttonStates = useSelector((state: RootState) => state.buttonStates)
 
-    const isVisibleFor1Input = useSelector((state: RootState) => state.counter.isVisibleFor1Input)
-    const isVisibleFor2Input = useSelector((state: RootState) => state.counter.isVisibleFor2Input)
+    const isVisibleFor1Input = useSelector((state: RootState) => state.isVisibleFor1Input)
+    const isVisibleFor2Input = useSelector((state: RootState) => state.isVisibleFor2Input)
 
-    const errorMessage = useSelector((state: RootState) => state.counter.errorMessage)
+    const errorMessage = useSelector((state: RootState) => state.errorMessage)
 
-    const isValidFirstInput = useSelector((state: RootState) => state.counter.isValidFirstInput)
-    const isValidSecondInput = useSelector((state: RootState) => state.counter.isValidSecondInput)
+    const isValidFirstInput = useSelector((state: RootState) => state.isValidFirstInput)
+    const isValidSecondInput = useSelector((state: RootState) => state.isValidSecondInput)
 
     useEffect(() => {
         updateButtonStatus()

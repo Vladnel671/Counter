@@ -1,4 +1,4 @@
-import { combineReducers, createStore } from 'redux';
+import { createStore } from 'redux';
 import { CounterReducer } from "./CounterReducer";
 
 export type CounterStateType = {
@@ -30,12 +30,7 @@ export const initialState: CounterStateType = {
     isValidSecondInput: true,
 };
 
-export type RootState = {
-    counter: CounterStateType;
-};
+const rootReducer = CounterReducer;
 
-const rootReducer = combineReducers({
-    counter: CounterReducer
-});
-
+export type RootState = ReturnType<typeof rootReducer>;
 export const store = createStore(rootReducer);
