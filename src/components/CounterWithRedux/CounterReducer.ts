@@ -5,10 +5,6 @@ export const CounterReducer: Reducer<CounterStateType, CounterAction> = (state =
     switch (action.type) {
         case "INCREMENT_COUNT":
             return {...state, count: state.count + 1};
-        case "DECREMENT_COUNT":
-            return {...state, count: state.count - 1};
-        case "RESET_COUNT":
-            return {...state, count: 0};
         case "SET_COUNT":
             return {...state, count: action.payload};
         case "SET_MIN_VALUE":

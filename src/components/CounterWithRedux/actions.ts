@@ -6,18 +6,6 @@ export const incrementCount = (): CounterAction => {
     };
 };
 
-export const decrementCount = (): CounterAction => {
-    return {
-        type: "DECREMENT_COUNT"
-    };
-};
-
-export const resetCount = (): CounterAction => {
-    return {
-        type: "RESET_COUNT"
-    };
-};
-
 export const setCount = (count: number): CounterAction => {
     return {
         type: "SET_COUNT",
