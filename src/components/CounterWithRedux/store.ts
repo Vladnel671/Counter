@@ -1,5 +1,5 @@
-import {createStore} from 'redux';
-import {CounterReducer} from "./CounterReducer";
+import { combineReducers, createStore } from 'redux';
+import { CounterReducer } from "./CounterReducer";
 
 export type CounterStateType = {
     count: number;
@@ -15,7 +15,7 @@ export type CounterStateType = {
 
 export type CounterAction = {
     type: string;
-    payload: any;
+    payload?: any;
 }
 
 export const initialState: CounterStateType = {
@@ -30,6 +30,12 @@ export const initialState: CounterStateType = {
     isValidSecondInput: true,
 };
 
-export const store = createStore(CounterReducer, initialState);
+export type RootState = {
+    counter: CounterStateType;
+};
 
+const rootReducer = combineReducers({
+    counter: CounterReducer
+});
 
+export const store = createStore(rootReducer);

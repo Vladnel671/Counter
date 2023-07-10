@@ -1,44 +1,35 @@
-import React, {ChangeEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, useEffect} from "react";
 import './../Counter/Counter.css'
 import './../Counter/Settings/SettingsWrapper/Settings.css'
 import CounterWrapper from "./CounterWrapper/CounterWrapper";
 import SettingsWrapper from "../Counter/Settings/SettingsWrapper/SettingsWrapper";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "./store";
+import {
+    incrementCount,
+    setButtonStates, setCount,
+    setErrorMessage,
+    setIsValidFirstInput,
+    setIsValidSecondInput,
+    setIsVisibleFor1Input, setIsVisibleFor2Input, setMaxValue, setMinValue
+} from "./actions";
 
 function CounterWithRedux() {
+    const dispatch = useDispatch();
+    const count = useSelector((state: RootState) => state.counter.count);
 
-    const [count, setCount] = useState<number>(0);
-    const [minValue, setMinValue] = useState<number>(0);
-    const [maxValue, setMaxValue] = useState<number>(5);
-    const [buttonStates, setButtonStates] = useState<Array<boolean>>([
-        true, // первая кнопка set
-        false, // вторая кнопка inc
-        false // третья кнопка reset
-    ]);
-    const [isVisibleFor1Input, setIsVisible] = useState<boolean>(false);
-    const [isVisibleFor2Input, set2IsVisible] = useState<boolean>(false);
-    const [errorMessage, setErrorMessage] = useState("");
-    const [isValidFirstInput, setIsValidFirstInput] = useState(true);
-    const [isValidSecondInput, setIsValidSecondInput] = useState(true);
+    const minValue = useSelector((state: RootState) => state.counter.minValue);
+    const maxValue = useSelector((state: RootState) => state.counter.maxValue);
 
-    useEffect(() => {
-        let newMin = localStorage.getItem('min')
-        let newMax = localStorage.getItem('max')
-        if (newMin && newMax) {
-            let newMinParsed = JSON.parse(newMin) ?? minValue;
-            let newMaxParsed = JSON.parse(newMax) ?? maxValue;
-            setMinValue(newMinParsed)
-            setMaxValue(newMaxParsed)
+    const buttonStates = useSelector((state: RootState) => state.counter.buttonStates)
 
-        }
-    }, [])
+    const isVisibleFor1Input = useSelector((state: RootState) => state.counter.isVisibleFor1Input)
+    const isVisibleFor2Input = useSelector((state: RootState) => state.counter.isVisibleFor2Input)
 
-    useEffect(() => {
-        let newMin = localStorage.getItem('min')
-        if (newMin) {
-            let newMinParsed = JSON.parse(newMin) ?? minValue;
-            setCount(newMinParsed)
-        }
-    }, [])
+    const errorMessage = useSelector((state: RootState) => state.counter.errorMessage)
+
+    const isValidFirstInput = useSelector((state: RootState) => state.counter.isValidFirstInput)
+    const isValidSecondInput = useSelector((state: RootState) => state.counter.isValidSecondInput)
 
     useEffect(() => {
         updateButtonStatus()
@@ -46,42 +37,42 @@ function CounterWithRedux() {
 
     useEffect(() => {
         if (maxValue >= 1 && minValue >= 0) {
-            setErrorMessage('enter values and press set')
-            setIsValidFirstInput(true)
-            setIsValidSecondInput(true)
+            dispatch(setErrorMessage('enter values and press set'))
+            dispatch(setIsValidFirstInput(true))
+            dispatch(setIsValidSecondInput(true))
             if (maxValue === minValue) {
-                setIsValidFirstInput(false)
-                setIsValidSecondInput(false)
-                setErrorMessage('incorrect values')
-                setButtonStates([true, true, true])
+                dispatch(setIsValidFirstInput(false))
+                dispatch(setIsValidSecondInput(false))
+                dispatch(setErrorMessage('incorrect values'))
+                dispatch(setButtonStates([true, true, true]))
             } else {
-                setIsValidFirstInput(true)
-                setIsValidSecondInput(true)
+                dispatch(setIsValidFirstInput(true))
+                dispatch(setIsValidSecondInput(true))
                 if (minValue > maxValue) {
-                    setIsValidFirstInput(false)
-                    setIsValidSecondInput(false)
-                    setErrorMessage('incorrect values')
-                    setButtonStates([true, true, true])
+                    dispatch(setIsValidFirstInput(false))
+                    dispatch(setIsValidSecondInput(false))
+                    dispatch(setErrorMessage('incorrect values'))
+                    dispatch(setButtonStates([true, true, true]))
                 }
                 if (minValue < maxValue) {
-                    setIsValidFirstInput(true)
-                    setIsValidSecondInput(true)
+                    dispatch(setIsValidFirstInput(true))
+                    dispatch(setIsValidSecondInput(true))
                 }
             }
         } else {
             if (maxValue < 1) {
-                setIsValidSecondInput(false)
-                setErrorMessage('incorrect value')
-                setButtonStates([true, true, true])
+                dispatch(setIsValidSecondInput(false))
+                dispatch(setErrorMessage('incorrect value'))
+                dispatch(setButtonStates([true, true, true]))
             } else {
-                setIsValidSecondInput(true)
+                dispatch(setIsValidSecondInput(true))
             }
             if (minValue < 0) {
-                setIsValidFirstInput(false)
-                setErrorMessage('incorrect value')
-                setButtonStates([true, true, true])
+                dispatch(setIsValidFirstInput(false))
+                dispatch(setErrorMessage('incorrect value'))
+                dispatch(setButtonStates([true, true, true]))
             } else {
-                setIsValidFirstInput(true)
+                dispatch(setIsValidFirstInput(true))
             }
         }
 
@@ -89,64 +80,62 @@ function CounterWithRedux() {
 
     function updateButtonStatus() {
         if (count === maxValue) {
-            setButtonStates([true, true, false]);
+            dispatch(setButtonStates([true, true, false]));
         }
     }
 
     function comparing() {
         if (minValue !== maxValue && minValue < maxValue && maxValue >= 1 && minValue >= 0) {
-            setButtonStates([false, true, true])
+            dispatch(setButtonStates([false, true, true]))
         } else {
-            setButtonStates([true, true, true])
+            dispatch(setButtonStates([true, true, true]))
         }
     }
 
     const disableButtonOnFocusInput = () => {
         comparing()
-        setIsVisible(true)
-        set2IsVisible(false)
+        dispatch(setIsVisibleFor1Input(true))
+        dispatch(setIsVisibleFor2Input(false))
     }
     const disableButtonOnFocusInput2 = () => {
         comparing()
-        setIsVisible(false)
-        set2IsVisible(true)
+        dispatch(setIsVisibleFor1Input(false))
+        dispatch(setIsVisibleFor2Input(true))
     }
     const showOnBlur = () => {
-        setIsVisible(false)
-        set2IsVisible(false)
+        dispatch(setIsVisibleFor1Input(false))
+        dispatch(setIsVisibleFor2Input(false))
         comparing()
     }
 
     function increment() {
         if (count < maxValue) {
-            setCount(count + 1);
+            dispatch(incrementCount());
         } else {
-            setButtonStates([true, true, false])
+            dispatch(setButtonStates([true, true, false]))
         }
     }
 
     function reset() {
-        setButtonStates([true, false, false])
-        setCount(minValue);
+        dispatch(setButtonStates([true, false, false]))
+        dispatch(setCount(minValue));
     }
 
     function setMinMaxValues() {
-        setButtonStates([true, false, false])
-        setIsVisible(false)
-        set2IsVisible(false)
-        localStorage.setItem('min', JSON.stringify(minValue));
-        localStorage.setItem('max', JSON.stringify(maxValue));
-        setCount(minValue);
+        dispatch(setButtonStates([true, false, false]))
+        dispatch(setIsVisibleFor1Input(false))
+        dispatch(setIsVisibleFor2Input(false))
+        dispatch(setCount(minValue));
     }
 
     function handleMinValueChange(event: ChangeEvent<HTMLInputElement>) {
-        setButtonStates([false, true, true])
-        setMinValue(Number(event.target.value));
+        dispatch(setButtonStates([false, true, true]))
+        dispatch(setMinValue(Number(event.target.value)));
     }
 
     function handleMaxValueChange(event: ChangeEvent<HTMLInputElement>) {
-        setButtonStates([false, true, true])
-        setMaxValue(Number(event.target.value));
+        dispatch(setButtonStates([false, true, true]))
+        dispatch(setMaxValue(Number(event.target.value)));
     }
 
     const changeRedMessage = () => {
