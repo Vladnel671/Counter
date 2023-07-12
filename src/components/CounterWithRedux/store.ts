@@ -1,7 +1,7 @@
-import { createStore } from 'redux';
-import { CounterReducer } from "./CounterReducer";
-import {saveState} from "./localstorage";
-import throttle from 'lodash.throttle';
+import {createStore} from 'redux';
+import {CounterReducer} from "./CounterReducer";
+import {loadState, saveState} from "./localstorage";
+import { throttle } from "lodash";
 
 export type CounterStateType = {
     count: number;
@@ -35,7 +35,11 @@ export const initialState: CounterStateType = {
 const rootReducer = CounterReducer;
 
 export type RootState = ReturnType<typeof rootReducer>;
-export const store = createStore(rootReducer);
+const persistedState = loadState();
+export const store = createStore(
+    rootReducer,
+    persistedState
+);
 
 store.subscribe(
     throttle(() => {

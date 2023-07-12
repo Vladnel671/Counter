@@ -9,8 +9,13 @@ export const loadState = () => {
         const state = JSON.parse(serializedState);
         return {
             ...state,
-            minValue: state.minValue,
-            maxValue: state.maxValue
+            count: state.minValue,
+            buttonStates: [true, false, false],
+            isVisibleFor1Input: false,
+            isVisibleFor2Input: false,
+            errorMessage: "",
+            isValidFirstInput: true,
+            isValidSecondInput: true,
         };
     } catch (err) {
         return undefined;
